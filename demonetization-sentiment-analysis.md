@@ -179,3 +179,30 @@ ggplot(data = tweets.analysis, aes(x = score, fill = sentiment)) +
 ```
 
 ![](demonetization-sentiment-analysis_files/figure-markdown_github/unnamed-chunk-4-1.png)
+
+``` r
+
+bag <- tweets.df$text
+
+bag <- Corpus(VectorSource(bag))
+
+bag <- tm_map(bag, tolower)
+
+bag <- tm_map(bag, PlainTextDocument)
+
+bag <- tm_map(bag, removePunctuation)
+
+bag <- tm_map(bag, removeWords, c("demonetization","demonetisation", stopwords("english")))
+
+bag <- tm_map(bag, stripWhitespace)
+
+bag <- tm_map(bag, stemDocument)
+
+
+wordcloud(bag, min.freq = 50,
+          max.words=1500, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"), scale = c(3,0.5))
+
+```
+
+![](demonetization-sentiment-analysis_files/figure-markdown_github/unnamed-chunk-4-2.png)
